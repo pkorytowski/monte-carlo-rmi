@@ -1,14 +1,19 @@
 How to run
 
 1. Build code:
-javac Simulation.java SimulationInterface.java State.java Parameters.java Client.java
-2. Run rmi registry:
-java_path/bin/rmiregistry 1099
-3. Run two servers (e.g separate terminals)
-java -Djava.security.policy=java.policy Simulation localhost:1099/hostname1
 
-java -Djava.security.policy=java.policy Simulation localhost:1099/hostname2
+    $ ```make build```
+
+2. Run rmi registry:
+
+    $ ```make registry```
+
+3. Run two servers (e.g separate terminals)
+
+    $ ```make host name=hostname1```
+
+    $ ```make host name=hostname2```
 
 4. Run client in separate terminal (it will execute our functionality)
 
-java Client localhost:1099 hostname1 localhost:1099 hostname2   
+    $ ```make run name1=hostname1 name2=hostname2```   
