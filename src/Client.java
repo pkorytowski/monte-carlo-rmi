@@ -110,7 +110,7 @@ public class Client {
 
 		System.out.println("H,Absorption ratio,Transmission ratio,Reflection ratio");
 		for (int h = 0; h < H; h++) {
-			System.out.println((h + 1) + ", " + results[h][1] + ", " + results[h][0] + ", " + results[h][2]);
+			System.out.println((h + 1) + ", " + (float) results[h][1]/iter + ", " + (float) results[h][0]/iter + ", " + (float) results[h][2]/iter);
 		}
 	}
 }
