@@ -63,7 +63,7 @@ class SideThread extends Thread {
                 System.out.println( "Thread " + hostName + ":" );
                 for(int i=0; i<results.length; i++) {
                     for(int j=0; j<results[0].length; j++) {
-                        results[i][j] = parameters.results[i][j];
+                        results[i][j] += parameters.results[i][j];
                     }
                 }
                 System.out.println(results[0][0]);
@@ -89,24 +89,28 @@ public class Client {
 
 		Params params = Params.fromFile("../params.txt");
 
-        double CC = params.getCC();
-        double CS = params.getCS();
-        int H = params.getH();
-        long iter = params.getIter();
-        double C = CC + CS;
-        double pAbsor = CC / C;
+		double CC = params.getCC();
+		double CS = params.getCS();
+		int H = params.getH();
+		long iter = params.getIter();
+		double C = CC + CS;
+		double pAbsor = CC / C;
 
-		long[][] res = new long[H][3];		
+		long[][] results = new long[H][3];		
 			
 		SideBarrier barrier = new SideBarrier();
-		Thread thread1 = new SideThread( arg[0], arg[1], barrier, H, iter, 
-							pAbsor, C, res, new SecureRandom(SecureRandom.getSeed(32)));
+		Thread thread1 = new SideThread( arg[0], arg[1], barrier, H, iter/2, 
+							pAbsor, C, results, new SecureRandom(SecureRandom.getSeed(32)));
 		thread1.start();
-		Thread thread2 = new SideThread( arg[2], arg[3], barrier, H, iter, 
-							pAbsor, C, res, new SecureRandom(SecureRandom.getSeed(32)));
+		Thread thread2 = new SideThread( arg[2], arg[3], barrier, H, iter/2, 
+							pAbsor, C, results, new SecureRandom(SecureRandom.getSeed(32)));
 		thread2.start();
 		thread1.join();	
 		thread2.join();
-        System.out.println(res[0][0] + " " + res[0][1] + " " + res[0][2]);
+
+		System.out.println("H,Absorption ratio,Transmission ratio,Reflection ratio");
+		for (int h = 0; h < H; h++) {
+			System.out.println((h + 1) + ", " + results[h][1] + ", " + results[h][0] + ", " + results[h][2]);
+		}
 	}
 }

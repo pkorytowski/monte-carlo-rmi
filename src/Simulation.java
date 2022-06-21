@@ -31,11 +31,9 @@ public class Simulation extends UnicastRemoteObject implements SimulationInterfa
 
     @Override
     public Parameters simulate_neutrons(Parameters parameters) throws RemoteException {
-
-        
-        long localIterations = parameters.getLocalIterations();
         int H = parameters.getH();
         for (int h = 1; h<=H; h++) {
+            long localIterations = parameters.getLocalIterations();
             int[] local_results = {0, 0, 0};
             while (localIterations > 0) {
                 local_results[simulate_single_neutron(parameters.getC(), parameters.generator, parameters.getPAbsor(), h)]++;
