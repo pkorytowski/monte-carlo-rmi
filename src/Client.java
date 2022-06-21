@@ -1,5 +1,6 @@
 import java.rmi.*;
 import java.security.SecureRandom;			
+import java.io.*;
 
 class SideBarrier {
 	int stoppedCount;		
@@ -76,18 +77,22 @@ class SideThread extends Thread {
 	}
 }
 
+
 public class Client {
-	public static void main( String arg[] ) throws Exception{
+	public static void main( String arg[] ) throws Exception {
 
 	if( arg.length < 2 ) {					
 			System.out.println(
 					"specify hostname1 servername1 hostname2 servername2" );
 			return;
 		}
-        double CC = 0.3;
-        double CS = 0.7;
-        int H = 10;
-        long iter = 1000000;
+
+		Params params = Params.fromFile("../params.txt");
+
+        double CC = params.getCC();
+        double CS = params.getCS();
+        int H = params.getH();
+        long iter = params.getIter();
         double C = CC + CS;
         double pAbsor = CC / C;
 
