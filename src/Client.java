@@ -66,7 +66,6 @@ class SideThread extends Thread {
                         results[i][j] += parameters.results[i][j];
                     }
                 }
-                System.out.println(results[0][0]);
             }
             barrier.waitForTheOthers();
 		}
